@@ -3,7 +3,9 @@ Command line utility bombardier is a fast cross-platform HTTP
 benchmarking tool written in Go.
 
 Installation:
-  go get -u github.com/codesenberg/bombardier
+  go get -u github.com/jon-strabala/bombardier
+  note this is a fork of: github.com/codesenberg/bombardier
+
 
 Usage:
   bombardier [<flags>] <url>
@@ -16,6 +18,7 @@ Flags:
   -t, --timeout=2s            Socket/request timeout
   -l, --latencies             Print latency statistics
   -m, --method=GET            Request method
+  -u, --basicauth=user:pass   Basic Auth
   -b, --body=""               Request body
   -f, --body-file=""          File to use as request body
   -s, --stream                Specify whether to stream body using chunked

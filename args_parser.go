@@ -31,6 +31,7 @@ type kingpinParser struct {
 	insecure          bool
 	disableKeepAlives bool
 	method            string
+	basicAuth         string
 	body              string
 	bodyFilePath      string
 	stream            bool
@@ -54,6 +55,7 @@ func newKingpinParser() argsParser {
 		timeout:      defaultTimeout,
 		latencies:    false,
 		method:       "GET",
+	        basicAuth:    "",
 		body:         "",
 		bodyFilePath: "",
 		stream:       false,
@@ -86,6 +88,11 @@ func newKingpinParser() argsParser {
 		PlaceHolder("GET").
 		Short('m').
 		StringVar(&kparser.method)
+	app.Flag("basicauth", "Basic Auth").
+		PlaceHolder("user:pass").
+		Default("").
+		Short('u').
+		StringVar(&kparser.basicAuth)
 	app.Flag("body", "Request body").
 		Default("").
 		Short('b').
@@ -220,6 +227,7 @@ func (k *kingpinParser) parse(args []string) (config, error) {
 		headers:           k.headers,
 		timeout:           k.timeout,
 		method:            k.method,
+		basicAuth:         k.basicAuth,
 		body:              k.body,
 		bodyFilePath:      k.bodyFilePath,
 		stream:            k.stream,

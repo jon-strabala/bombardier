@@ -18,6 +18,8 @@ import (
 	fhist "github.com/codesenberg/concurrent/float64/histogram"
 	uhist "github.com/codesenberg/concurrent/uint64/histogram"
 	uuid "github.com/satori/go.uuid"
+
+        b64 "encoding/base64"
 )
 
 type bombardier struct {
@@ -125,6 +127,11 @@ func newBombardier(c config) (*bombardier, error) {
 			pbody = &sbody
 		}
 	}
+
+	if b.conf.basicAuth != "" {
+            sEnc := b64.StdEncoding.EncodeToString([]byte(b.conf.basicAuth))
+	    b.conf.headers.Set("Authorization: Basic " + sEnc)
+        }
 
 	cc := &clientOpts{
 		HTTP2:             false,
